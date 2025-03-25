@@ -1,0 +1,18 @@
+{
+    "name" : "STM32 Arduino CAN BUS Library",
+    "version" : "0.0.0.1",
+    "discription" : "STM32duino CAN BUS Library",
+    "keywords" : "STM32, CAN, Arduino, STM32duino",
+    "repository" : {
+        "type" : "git",
+        "url" : "https://github.com/yukuyuku4123/STM32duino-CAN-BUS-Library.git"
+    },
+    "author" : {
+        "name" : "zukki",
+        "url" : "https://twitter.com/yukuyuku4123",
+        "maintainer" : true
+    },
+    "LICENSE" : "MIT",
+    "frameworks" : "arduino",
+    "platforms" : ["nucleo_f303k8", "stm32f3"]
+}
