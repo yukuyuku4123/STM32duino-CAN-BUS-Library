@@ -20,7 +20,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define _250K 250000
 
 class BUS {
-    public:
+public:
     struct CAN_Msg {
         uint32_t id;
         uint8_t data[8];
@@ -29,6 +29,8 @@ class BUS {
     static CAN_Msg CAN_Rx_Msg;
     static CAN_Msg CAN_Tx_Msg;
 
+    typedef void (*CallbackFunc)(void);
+
     BUS();
     int begin(int BitRate);
     int setID(uint32_t id, uint32_t id2);
@@ -36,6 +38,21 @@ class BUS {
     void write(uint32_t id, uint8_t* data, uint8_t len);
     int available(void);
     void read();
+
+    void onReceive(CallbackFunc func) { onReceiveCallback = func; }
+    void onTransmit(CallbackFunc func) { onTransmitCallback = func; }
+
+    void handleReceive() { if(onReceiveCallback) onReceiveCallback(); }
+    void handleTransmit() { if(onTransmitCallback) onTransmitCallback(); }
+
+private:
+    CallbackFunc onReceiveCallback = nullptr;
+    CallbackFunc onTransmitCallback = nullptr;
 };
+
+extern "C" {
+    void CAN_RX0_IRQHandler(void);
+    void CAN_TX_IRQHandler(void);
+}
 
 #endif
